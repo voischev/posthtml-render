@@ -1,46 +1,41 @@
-[![npm][npm]][npm-url]
-[![node]]()
-[![tests][tests]][tests-url]
-[![coverage][cover]][cover-url]
-
 <div align="center">
-  <a href="https://github.com/posthtml/posthtml">
-    <img width="200" height="200" alt="PostHTML"
-      src="http://posthtml.github.io/posthtml/logo.svg">
-  </a>
+  <img width="150" height="150" alt="PostHTML" src="https://posthtml.github.io/posthtml/logo.svg">
   <h1>PostHTML Render</h1>
   <p>Renders a PostHTML Tree to HTML/XML</p>
+
+  [![Version][npm-version-shield]][npm]
+  [![Build][github-ci-shield]][github-ci]
+  [![License][license-shield]][license]
 </div>
 
-<h2 align="center">Install</h2>
+## Install
 
 ```bash
 npm i -D posthtml-render
 ```
 
-<h2 align="center">Usage</h2>
+## Usage
 
-### `NodeJS`
+### Node.js
 
 ```js
-import { render } from 'posthtml-render';
+import { render } from 'posthtml-render'
 
-const tree = [];
+const tree = []
 
-const node = {};
+const node = {}
 
-node.tag = 'ul';
-node.attrs = { class: 'list' };
+node.tag = 'ul'
+node.attrs = { class: 'list' }
 node.content = [
  'one',
  'two',
  'three'
-].map((content) => ({ tag: 'li', content }));
+].map((content) => ({ tag: 'li', content }))
 
-tree.push(node);
+tree.push(node)
 
-const html = render(tree, options);
-
+const html = render(tree, options)
 ```
 
 ```html
@@ -51,24 +46,27 @@ const html = render(tree, options);
 </ul>
 ```
 
-<h2 align="center">Options</h2>
+## Options
 
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
-|**[`singleTags`](#singletags)**|`{Array<String\|RegExp>}`|`[]`|Specify custom single tags (self closing)|
-|**[`closingSingleTag`](#closingSingleTag)**|`{String}`|[`>`](#default)|Specify the single tag closing format|
-|**[`quoteAllAttributes`](#quoteAllAttributes)**|`{Boolean}`|[`true`](#default)|Put double quotes around all tags, even when not necessary.|
-|**[`replaceQuote`](#replaceQuote)**|`{Boolean}`|[`true`](#default)|Replaces quotes in attribute values with `&quote;`.|
-|**[`quoteStyle`](#quoteStyle)**|`{0 or 1 or 2}`|[`2`](#default)|Specify the style of quote arround the attribute values|
+|**[`singleTags`](#singletags)**|`Array<String\|RegExp>`|`[]`|Specify custom single tags (self closing)|
+|**[`closingSingleTag`](#closingSingleTag)**|`String`|[`>`](#default)|Specify the single tag closing format|
+|**[`quoteAllAttributes`](#quoteAllAttributes)**|`Boolean`|[`true`](#default)|Put double quotes around all tags, even when not necessary.|
+|**[`replaceQuote`](#replaceQuote)**|`Boolean`|[`true`](#default)|Replaces quotes in attribute values with `&quote;`.|
+|**[`quoteStyle`](#quoteStyle)**|`Number`|[`2`](#default)|Specify the style of quote around the attribute values|
 
 ### `singleTags`
 
-Specify custom single tags (self closing)
+Type: `{Array<String|RegExp>}`\
+Default: `[]`
 
-### `{String}`
+Specify custom single tags (self closing).
+
+#### String
 
 ```js
-const render = require('posthtml-render')
+import { render } from 'posthtml-render'
 
 const tree = [ { tag: 'name' } ]
 const options = { singleTags: [ 'name' ] }
@@ -76,15 +74,16 @@ const options = { singleTags: [ 'name' ] }
 const html = render(tree, options)
 ```
 
-**result.html**
+Result:
+
 ```html
 <name>
 ```
 
-#### `{RegExp}`
+#### RegExp
 
 ```js
-const render = require('posthtml-render')
+import { render } from 'posthtml-render'
 
 const tree = [ { tag: '%=title%' } ]
 const options = { singleTags: [ /^%.*%$/ ] }
@@ -92,24 +91,26 @@ const options = { singleTags: [ /^%.*%$/ ] }
 const html = render(tree, options)
 ```
 
-**result.html**
+Result:
+
 ```html
 <%=title%>
 ```
 
 ### `closingSingleTag`
 
-Specify the single tag closing format
+Type: `String`\
+Default: `>`
 
-#### `Formats`
+Specify the single tag closing format.
 
 ```js
-const render = require('posthtml-render')
+import { render } from 'posthtml-render'
 
 const tree = [ { tag: 'img' } ]
 ```
 
-##### `'tag'`
+##### `tag` format
 
 ```js
 const html = render(tree, { closingSingleTag: 'tag' })
@@ -119,7 +120,7 @@ const html = render(tree, { closingSingleTag: 'tag' })
 <custom></custom>
 ```
 
-##### `'slash'`
+##### `slash` format
 
 ```js
 const html = render(tree, { closingSingleTag: 'slash' })
@@ -129,7 +130,7 @@ const html = render(tree, { closingSingleTag: 'slash' })
 <custom />
 ```
 
-##### `'default' (Default)`
+##### `default`  (Default)
 
 ```js
 const html = render(tree)
@@ -139,7 +140,10 @@ const html = render(tree)
 <img>
 ```
 
-##### `'closeAs'`
+##### `closeAs`
+
+Type: `String`\
+Default: `default`
 
 ```js
 const tree = [ {
@@ -155,9 +159,12 @@ const html = render(tree, { closingSingleTag: 'closeAs' })
 
 ### `quoteAllAttributes`
 
+Type: `Boolean`\
+Default: `true`
+
 Specify if all attributes should be quoted.
 
-##### `true (Default)`
+##### `true`
 
 ```html
 <i src="index.js"></i>
@@ -171,9 +178,12 @@ Specify if all attributes should be quoted.
 
 ### `replaceQuote`
 
+Type: `Boolean`\
+Default: `true`
+
 Replaces quotes in attribute values with `&quote;`.
 
-##### `true (Default)`
+##### `true`
 
 ```html
 <img src="<?php echo $foo[&quote;bar&quote;] ?>">
@@ -187,7 +197,10 @@ Replaces quotes in attribute values with `&quote;`.
 
 ### `quoteStyle`
 
-##### `2 (Default)`
+Type: `Number`\
+Default: `2`
+
+##### `quoteStyle: 2`
 
 Attribute values are wrapped in double quotes:
 
@@ -195,7 +208,7 @@ Attribute values are wrapped in double quotes:
 <img src="https://example.com/example.png" onload="testFunc("test")">
 ```
 
-##### `1`
+##### `quoteStyle: 1`
 
 Attribute values are wrapped in single quote:
 
@@ -203,7 +216,7 @@ Attribute values are wrapped in single quote:
 <img src='https://example.com/example.png' onload='testFunc("test")'>
 ```
 
-##### `0`
+##### `quoteStyle: 0`
 
 Quote style is based on attribute values (an alternative for `replaceQuote` option):
 
@@ -211,15 +224,11 @@ Quote style is based on attribute values (an alternative for `replaceQuote` opti
 <img src="https://example.com/example.png" onload='testFunc("test")'>
 ```
 
-
-[npm]: https://img.shields.io/npm/v/posthtml-render.svg
-[npm-url]: https://npmjs.com/package/posthtml-render
-
-[node]: https://img.shields.io/node/v/posthtml-render.svg
-[node-url]: https://img.shields.io/node/v/posthtml-render.svg
-
-[tests]: http://img.shields.io/travis/posthtml/posthtml-render.svg
-[tests-url]: https://travis-ci.org/posthtml/posthtml-render
-
-[cover]: https://coveralls.io/repos/github/posthtml/posthtml-render/badge.svg
-[cover-url]: https://coveralls.io/github/posthtml/posthtml-render
+[npm]: https://www.npmjs.com/package/posthtml-render
+[npm-version-shield]: https://img.shields.io/npm/v/posthtml-render.svg
+[github-ci]: https://github.com/posthtml/posthtml-render/actions
+[github-ci-shield]: https://github.com/posthtml/posthtml-render/actions/workflows/nodejs.yml/badge.svg
+[license]: ./LICENSE
+[license-shield]: https://img.shields.io/npm/l/posthtml-render.svg
+[coverage]: https://coveralls.io/github/posthtml/posthtml-render
+[coverage-shield]: https://coveralls.io/repos/github/posthtml/posthtml-render/badge.svg
